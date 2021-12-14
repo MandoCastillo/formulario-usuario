@@ -6,7 +6,8 @@ interface TextFieldCustomProps<T> {
   name: keyof T;
   formData: T;
   errors: T;
-  type?: 'text' | 'file' | 'number' | 'email' | 'tel';
+  type?: 'text' | 'file' | 'number' | 'email' | 'tel' | 'date';
+  isShrink?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   hasError: Function;
 }
@@ -19,10 +20,14 @@ const TextFieldCustom = <T,>({
   name,
   label,
   type = 'text',
+  isShrink,
 }: TextFieldCustomProps<T>) => {
   return (
     <Grid item xs={6}>
       <TextField
+        InputLabelProps={{
+          shrink: isShrink,
+        }}
         margin="normal"
         required
         type={type}

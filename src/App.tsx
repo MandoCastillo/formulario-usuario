@@ -2,6 +2,7 @@ import './App.css';
 import UserForm from './pages/UserForm';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { FormProvider } from './context/FormContext';
 
 const darkTheme = createTheme({
   palette: {
@@ -12,8 +13,10 @@ const darkTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <UserForm />
+      <FormProvider>
+        <CssBaseline />
+        <UserForm />
+      </FormProvider>
     </ThemeProvider>
   );
 }
