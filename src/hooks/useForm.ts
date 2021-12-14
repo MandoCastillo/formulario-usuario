@@ -21,6 +21,7 @@ export const useForm = <T>(initState: T) => {
   const resetForm = () => {
     setFormData({ ...initState });
   };
+
   const resetErrors = () => {
     setErrors({ ...initState });
   };

@@ -9,7 +9,7 @@ const CompanyData: FC = () => {
     setError: setFormError,
     reset,
     nextFormStep,
-    formState: { isLoading, isCompanyDataRight },
+    formState: { isCompanyDataRight },
   } = useContext(FormContext);
   // const [state, setstate] = useState(initialState)
 
@@ -44,52 +44,46 @@ const CompanyData: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompanyDataRight]);
 
+  const validateFields = () => {
+    const fields = Object.keys(formData) as (keyof typeof formData)[];
+    fields.forEach((field) => {
+      switch (field) {
+        case 'phoneNumber':
+          if (
+            isEmpty(formData.phoneNumber) ||
+            !isValidPhone(formData.phoneNumber)
+          ) {
+            setError(
+              'phoneNumber',
+              'Este campo es necesario o no cumple los requisitos',
+            );
+            setFormError('isCompanyDataRight', false);
+          }
+          break;
+        case 'email':
+          if (isEmpty(formData.email) || !isValidEmail(formData.email)) {
+            setError(
+              'email',
+              'Este campo es necesario o no cumple los requisitos',
+            );
+            setFormError('isCompanyDataRight', false);
+          }
+          break;
+
+        default:
+          if (isEmpty(formData[field])) {
+            setError(field, 'Este campo es necesario');
+            setFormError('isCompanyDataRight', false);
+          }
+          break;
+      }
+    });
+  };
+
   const validateData = () => {
     resetErrors();
     reset();
-    if (isEmpty(formData.companyName)) {
-      setError('companyName', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.tradeName)) {
-      setError('tradeName', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.nationality)) {
-      setError('nationality', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.dateIncorporation)) {
-      setError('dateIncorporation', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.RFC)) {
-      setError('RFC', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.taxRegime)) {
-      setError('taxRegime', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.industry)) {
-      setError('industry', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.proofAddress)) {
-      setError('proofAddress', 'Este campo es necesario');
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.phoneNumber) || !isValidPhone(formData.phoneNumber)) {
-      setError(
-        'phoneNumber',
-        'Este campo es necesario o no cumple los requisitos',
-      );
-      setFormError('isCompanyDataRight', false);
-    }
-    if (isEmpty(formData.email) || !isValidEmail(formData.email)) {
-      setError('email', 'Este campo es necesario o no cumple los requisitos');
-      setFormError('isCompanyDataRight', false);
-    }
+    validateFields();
   };
 
   return (

@@ -16,6 +16,18 @@ export const formInitialState: FormState = {
   isBankAccountRight: false,
   isLoading: false,
   currentStep: 0,
+  // asdasd: {
+  //   companyName: '',
+  //   tradeName: '',
+  //   nationality: '',
+  //   dateIncorporation: '',
+  //   RFC: '',
+  //   taxRegime: '',
+  //   industry: '',
+  //   proofAddress: '',
+  //   phoneNumber: '',
+  //   email: '',
+  // },
 };
 
 export interface FormContextProps {
