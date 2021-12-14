@@ -1,5 +1,11 @@
 import { createContext, FC, useReducer } from 'react';
-import { resetErrors, setFormError, setIsLoading } from './form.actions';
+import {
+  nextStep,
+  prevStep,
+  resetErrors,
+  setFormError,
+  setIsLoading,
+} from './form.actions';
 import formReducer from './form.reducer';
 import { ErrorFormType, FormState } from './formContext.interface';
 
@@ -9,6 +15,7 @@ export const formInitialState: FormState = {
   isRepresentativeDataRight: false,
   isBankAccountRight: false,
   isLoading: false,
+  currentStep: 0,
 };
 
 export interface FormContextProps {
@@ -17,6 +24,8 @@ export interface FormContextProps {
   onSubmit: () => void;
   reset: () => void;
   setIsFormLoading: (value: boolean) => void;
+  nextFormStep: () => void;
+  prevFormStep: () => void;
 }
 
 export const FormContext = createContext({} as FormContextProps);
@@ -40,12 +49,21 @@ export const FormProvider: FC = ({ children }) => {
     dispatch(setIsLoading(value));
   };
 
+  const nextFormStep = () => {
+    dispatch(nextStep());
+  };
+  const prevFormStep = () => {
+    dispatch(prevStep());
+  };
+
   return (
     <FormContext.Provider
       value={{
         formState,
         setError,
         onSubmit,
+        nextFormStep,
+        prevFormStep,
         reset,
         setIsFormLoading,
       }}

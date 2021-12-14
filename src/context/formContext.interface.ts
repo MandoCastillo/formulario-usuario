@@ -4,6 +4,7 @@ export interface FormState {
   isRepresentativeDataRight: boolean;
   isBankAccountRight: boolean;
   isLoading: boolean;
+  currentStep: number;
 }
 
 export type ErrorFormType =
@@ -26,4 +27,6 @@ export type FormAction =
         value: boolean;
       };
     }
-  | { type: 'resetErrors' };
+  | { type: 'resetErrors' }
+  | { type: 'nextStep' }
+  | { type: 'prevStep' };

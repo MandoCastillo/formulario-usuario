@@ -17,11 +17,24 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
     case 'resetErrors':
       return {
         ...state,
-        isCompanyDataRight: false,
-        isAddressDataRight: false,
-        isRepresentativeDataRight: false,
-        isBankAccountRight: false,
+        isCompanyDataRight: true,
+        isAddressDataRight: true,
+        isRepresentativeDataRight: true,
+        isBankAccountRight: true,
       };
+
+    case 'nextStep': {
+      return {
+        ...state,
+        currentStep: state.currentStep + 1,
+      };
+    }
+    case 'prevStep': {
+      return {
+        ...state,
+        currentStep: state.currentStep - 1,
+      };
+    }
 
     default:
       return state;

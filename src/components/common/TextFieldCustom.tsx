@@ -23,7 +23,7 @@ const TextFieldCustom = <T,>({
   isShrink,
 }: TextFieldCustomProps<T>) => {
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} md={6}>
       <TextField
         InputLabelProps={{
           shrink: isShrink,

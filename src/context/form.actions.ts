@@ -21,3 +21,11 @@ export const setIsLoading = (value: boolean): FormAction => ({
     value,
   },
 });
+
+export const nextStep = (): FormAction => ({
+  type: 'nextStep',
+});
+
+export const prevStep = (): FormAction => ({
+  type: 'prevStep',
+});

@@ -6,7 +6,10 @@ import { FormProvider } from './context/FormContext';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
+    primary: {
+      main: '#F46D11',
+    },
   },
 });
 

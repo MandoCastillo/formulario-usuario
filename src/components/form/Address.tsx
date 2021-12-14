@@ -1,16 +1,12 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material';
-import { FC, useContext, useEffect } from 'react';
-import { FormContext } from '../context/FormContext';
-import { useForm } from '../hooks/useForm';
-import TextFieldCustom from './common/TextFieldCustom';
+import { Box, Button, Grid, Stack } from '@mui/material';
+import { FC, useContext } from 'react';
+import { FormContext } from '../../context/FormContext';
+import { useForm } from '../../hooks/useForm';
+import TextFieldCustom from '../common/TextFieldCustom';
 
-const Address: FC = () => {
-  const {
-    setError: setFormError,
-    reset,
-    formState: { isLoading },
-  } = useContext(FormContext);
+interface CompanyDataProps {}
 
+const Address: FC<CompanyDataProps> = ({}) => {
   const {
     onChange,
     isEmpty,
@@ -33,76 +29,23 @@ const Address: FC = () => {
     phoneNumber: '',
     email: '',
   });
-
-  useEffect(() => {
-    if (isLoading) {
-      validateData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  const { prevFormStep, nextFormStep } = useContext(FormContext);
 
   const validateData = () => {
     resetErrors();
-    reset();
-    if (isEmpty(formData.companyName)) {
-      setError('companyName', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.tradeName)) {
-      setError('tradeName', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.nationality)) {
-      setError('nationality', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.dateIncorporation)) {
-      setError('dateIncorporation', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.RFC)) {
-      setError('RFC', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.taxRegime)) {
-      setError('taxRegime', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.industry)) {
-      setError('industry', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.proofAddress)) {
-      setError('proofAddress', 'Este campo es necesario');
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.phoneNumber) || !isValidPhone(formData.phoneNumber)) {
-      setError(
-        'phoneNumber',
-        'Este campo es necesario o no cumple los requisitos',
-      );
-      setFormError('isAddressDataRight', true);
-    }
-    if (isEmpty(formData.email) || !isValidEmail(formData.email)) {
-      setError('email', 'Este campo es necesario o no cumple los requisitos');
-      setFormError('isAddressDataRight', true);
-    }
+    // reset();
   };
-
   return (
     <Box
       sx={{
         width: 1,
       }}
     >
-      <Typography component="h1" variant="h5">
-        Datos de la empresa
-      </Typography>
-      <Divider />
       <Box
         sx={{
           width: 1,
           flexGrow: 1,
+          mb: 4,
         }}
       >
         <Grid container spacing={2}>
@@ -196,6 +139,20 @@ const Address: FC = () => {
           />
         </Grid>
       </Box>
+      <Stack direction="row" justifyContent="space-between">
+        <Button onClick={prevFormStep} color="primary" size="large">
+          Anterior
+        </Button>
+        <Button
+          onClick={validateData}
+          style={{ color: 'white' }}
+          variant="contained"
+          color="primary"
+          size="large"
+        >
+          Siguiente
+        </Button>
+      </Stack>
     </Box>
   );
 };

@@ -1,0 +1,35 @@
+import { Step, StepLabel, Stepper } from '@mui/material';
+import { FC, useContext } from 'react';
+import { FormContext } from '../../context/FormContext';
+
+interface FormStepperProps {}
+
+const steps = [
+  'Datos de la empresa',
+  'Domicilio de la empresa',
+  ' Representante legal',
+  'Cuenta bancaria',
+];
+
+const FormStepper: FC<FormStepperProps> = ({}) => {
+  const {
+    formState: { currentStep },
+  } = useContext(FormContext);
+
+  return (
+    <Stepper activeStep={currentStep}>
+      {steps.map((label, index) => {
+        const labelProps: {
+          optional?: React.ReactNode;
+        } = {};
+        return (
+          <Step key={label}>
+            <StepLabel {...labelProps}>{label}</StepLabel>
+          </Step>
+        );
+      })}
+    </Stepper>
+  );
+};
+
+export default FormStepper;
