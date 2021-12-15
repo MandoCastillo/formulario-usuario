@@ -2,7 +2,7 @@ import { Button, Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import { FC, useContext } from 'react';
-import CompanyData from '../components/form/CompanyData1';
+import CompanyData from '../components/form/CompanyData';
 import Header from '../components/common/Header';
 import FormStepper from '../components/form/FormStepper';
 import { FormContext } from '../context/FormContext';

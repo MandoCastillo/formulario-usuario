@@ -1,8 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 
-export const useForm = <T>(initState: T) => {
+export const useForm = <T>(initState: T, errorsInitialState?: T) => {
   const [formData, setFormData] = useState(initState);
-  const [errors, setErrors] = useState(initState);
+  const [errors, setErrors] = useState(
+    errorsInitialState ? { ...errorsInitialState } : { ...initState },
+  );
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setFormData((prev) => ({
@@ -22,8 +24,8 @@ export const useForm = <T>(initState: T) => {
     setFormData({ ...initState });
   };
 
-  const resetErrors = () => {
-    setErrors({ ...initState });
+  const resetErrors = (value?: T) => {
+    setErrors(value ? { ...value } : { ...errorsInitialState!! });
   };
 
   const isValidEmail = (email: string): boolean => {

@@ -1,17 +1,19 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../context/FormContext';
 import { useForm } from '../../hooks/useForm';
 import TextFieldCustom from '../common/TextFieldCustom';
+import { companyData as companyResetData } from '../../context/formDataMock';
 
 const CompanyData: FC = () => {
   const {
     setError: setFormError,
     reset,
     nextFormStep,
-    formState: { isCompanyDataRight },
+    setFormCompanyData,
+    formState: { isCompanyDataRight, companyData },
   } = useContext(FormContext);
-  // const [state, setstate] = useState(initialState)
+  const [buttonHasClicked, setButtonHasClicked] = useState(false);
 
   const {
     onChange,
@@ -23,23 +25,15 @@ const CompanyData: FC = () => {
     hasError,
     errors,
     formData,
-  } = useForm({
-    companyName: '',
-    tradeName: '',
-    nationality: '',
-    dateIncorporation: '',
-    RFC: '',
-    taxRegime: '',
-    industry: '',
-    proofAddress: '',
-    phoneNumber: '',
-    email: '',
-  });
+  } = useForm({ ...companyData, proofAddress: '' }, companyResetData);
 
   useEffect(() => {
-    if (isCompanyDataRight) {
-      nextFormStep();
+    if (isCompanyDataRight && buttonHasClicked) {
+      setButtonHasClicked(false);
       setFormError('isCompanyDataRight', false);
+      setFormCompanyData({ ...formData });
+      reset();
+      nextFormStep();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompanyDataRight]);
@@ -81,7 +75,8 @@ const CompanyData: FC = () => {
   };
 
   const validateData = () => {
-    resetErrors();
+    setButtonHasClicked(true);
+    resetErrors(companyResetData);
     reset();
     validateFields();
   };

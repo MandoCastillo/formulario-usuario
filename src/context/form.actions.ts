@@ -1,4 +1,8 @@
-import { ErrorFormType, FormAction } from './formContext.interface';
+import {
+  CompanyData,
+  ErrorFormType,
+  FormAction,
+} from './formContext.interface';
 
 export const setFormError = (
   type: ErrorFormType,
@@ -28,4 +32,11 @@ export const nextStep = (): FormAction => ({
 
 export const prevStep = (): FormAction => ({
   type: 'prevStep',
+});
+
+export const setCompanyData = (value: CompanyData): FormAction => ({
+  type: 'setCompanyData',
+  payload: {
+    value,
+  },
 });

@@ -5,6 +5,20 @@ export interface FormState {
   isBankAccountRight: boolean;
   isLoading: boolean;
   currentStep: number;
+  companyData: CompanyData;
+}
+
+export interface CompanyData {
+  companyName: string;
+  tradeName: string;
+  nationality: string;
+  dateIncorporation: string;
+  RFC: string;
+  taxRegime: string;
+  industry: string;
+  proofAddress: string;
+  phoneNumber: string;
+  email: string;
 }
 
 export type ErrorFormType =
@@ -29,4 +43,10 @@ export type FormAction =
     }
   | { type: 'resetErrors' }
   | { type: 'nextStep' }
+  | {
+      type: 'setCompanyData';
+      payload: {
+        value: CompanyData;
+      };
+    }
   | { type: 'prevStep' };

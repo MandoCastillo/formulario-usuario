@@ -29,12 +29,18 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
         currentStep: state.currentStep + 1,
       };
     }
-    case 'prevStep': {
+
+    case 'prevStep':
       return {
         ...state,
         currentStep: state.currentStep - 1,
       };
-    }
+
+    case 'setCompanyData':
+      return {
+        ...state,
+        companyData: action.payload.value,
+      };
 
     default:
       return state;

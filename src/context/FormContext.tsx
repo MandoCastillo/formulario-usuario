@@ -5,9 +5,11 @@ import {
   resetErrors,
   setFormError,
   setIsLoading,
+  setCompanyData,
 } from './form.actions';
 import formReducer from './form.reducer';
-import { ErrorFormType, FormState } from './formContext.interface';
+import { ErrorFormType, FormState, CompanyData } from './formContext.interface';
+import { companyData } from './formDataMock';
 
 export const formInitialState: FormState = {
   isCompanyDataRight: false,
@@ -16,18 +18,7 @@ export const formInitialState: FormState = {
   isBankAccountRight: false,
   isLoading: false,
   currentStep: 0,
-  // asdasd: {
-  //   companyName: '',
-  //   tradeName: '',
-  //   nationality: '',
-  //   dateIncorporation: '',
-  //   RFC: '',
-  //   taxRegime: '',
-  //   industry: '',
-  //   proofAddress: '',
-  //   phoneNumber: '',
-  //   email: '',
-  // },
+  companyData,
 };
 
 export interface FormContextProps {
@@ -38,6 +29,7 @@ export interface FormContextProps {
   setIsFormLoading: (value: boolean) => void;
   nextFormStep: () => void;
   prevFormStep: () => void;
+  setFormCompanyData: (value: CompanyData) => void;
 }
 
 export const FormContext = createContext({} as FormContextProps);
@@ -64,8 +56,13 @@ export const FormProvider: FC = ({ children }) => {
   const nextFormStep = () => {
     dispatch(nextStep());
   };
+
   const prevFormStep = () => {
     dispatch(prevStep());
+  };
+
+  const setFormCompanyData = (value: CompanyData) => {
+    dispatch(setCompanyData(value));
   };
 
   return (
@@ -78,6 +75,7 @@ export const FormProvider: FC = ({ children }) => {
         prevFormStep,
         reset,
         setIsFormLoading,
+        setFormCompanyData,
       }}
     >
       {children}
