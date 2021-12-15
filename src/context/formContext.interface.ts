@@ -9,6 +9,8 @@ export interface FormState {
   companyData: CompanyData;
   companyAddress: Address;
   representativeData: RepresentativeData;
+  representativeAddress: Address;
+  bankAccount: BankAccount;
 }
 
 export interface CompanyData {
@@ -33,7 +35,7 @@ export interface RepresentativeData {
   nationality: string;
   CURP: string;
   RFC: string;
-  maritalStatus: 'single' | 'married';
+  maritalStatus: 'single' | 'married' | 'divorced' | 'freeUnion';
   email: string;
   phoneNumber: string;
   identificationDocument: string;
@@ -48,6 +50,11 @@ export interface Address {
   city: string;
   state: string;
   country: string;
+}
+
+export interface BankAccount {
+  CLABE: string;
+  bank: string;
 }
 
 export type ErrorFormType =
@@ -88,6 +95,18 @@ export type FormAction =
     }
   | {
       type: 'setCompanyAddress';
+      payload: {
+        value: Address;
+      };
+    }
+  | {
+      type: 'setBankAccount';
+      payload: {
+        value: BankAccount;
+      };
+    }
+  | {
+      type: 'setRepresentativeAddress';
       payload: {
         value: Address;
       };

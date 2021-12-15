@@ -1,5 +1,6 @@
 import {
   Address,
+  BankAccount,
   CompanyData,
   ErrorFormType,
   FormAction,
@@ -54,6 +55,20 @@ export const setRepresentativeData = (
   value: RepresentativeData,
 ): FormAction => ({
   type: 'setRepresentativeData',
+  payload: {
+    value,
+  },
+});
+
+export const setRepresentativeAddress = (value: Address): FormAction => ({
+  type: 'setRepresentativeAddress',
+  payload: {
+    value,
+  },
+});
+
+export const setBankAccount = (value: BankAccount): FormAction => ({
+  type: 'setBankAccount',
   payload: {
     value,
   },

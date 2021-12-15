@@ -7,7 +7,8 @@ interface FormStepperProps {}
 const steps = [
   'Datos de la empresa',
   'Domicilio de la empresa',
-  ' Representante legal',
+  'Representante legal',
+  'Representante legal Domicilio',
   'Cuenta bancaria',
 ];
 
@@ -17,7 +18,7 @@ const FormStepper: FC<FormStepperProps> = ({}) => {
   } = useContext(FormContext);
 
   return (
-    <Stepper activeStep={currentStep}>
+    <Stepper activeStep={currentStep} style={{ marginBottom: '2rem' }}>
       {steps.map((label, index) => {
         const labelProps: {
           optional?: React.ReactNode;

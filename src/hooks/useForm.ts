@@ -56,11 +56,9 @@ export const useForm = <T>(initState: T, errorsInitialState?: T) => {
     ...formData,
     ...errors,
 
-    // properties
     formData,
     errors,
 
-    // Methods
     isValidEmail,
     isValidPhone,
     isEmpty,

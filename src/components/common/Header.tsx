@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ title }) => {
   return (
-    <Typography variant="h2" gutterBottom component="h4" mt={6}>
+    <Typography mb={4} variant="h2" gutterBottom component="h4" mt={6}>
       {title}
     </Typography>
   );

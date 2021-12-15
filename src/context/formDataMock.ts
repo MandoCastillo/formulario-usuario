@@ -1,5 +1,6 @@
 import {
   Address,
+  BankAccount,
   CompanyData,
   RepresentativeData,
 } from './formContext.interface';
@@ -41,4 +42,9 @@ export const representativeData: RepresentativeData = {
   nationality: '',
   phoneNumber: '',
   stateBirth: '',
+};
+
+export const bankAccount: BankAccount = {
+  CLABE: '',
+  bank: '',
 };

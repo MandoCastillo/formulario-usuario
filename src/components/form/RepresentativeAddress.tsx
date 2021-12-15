@@ -5,16 +5,14 @@ import { address } from '../../context/formDataMock';
 import { useForm } from '../../hooks/useForm';
 import TextFieldCustom from '../common/TextFieldCustom';
 
-interface CompanyDataProps {}
-
-const CompanyAddress: FC<CompanyDataProps> = ({}) => {
+const RepresentativeAddress: FC = () => {
   const {
     setError: setFormError,
-    setFormCompanyAddress,
+    setFormRepresentativeAddress,
     prevFormStep,
     nextFormStep,
     reset,
-    formState: { companyAddress, isCompanyAddressDataRight },
+    formState: { representativeAddress, isRepresentativeAddressRight },
   } = useContext(FormContext);
 
   const [buttonHasClicked, setButtonHasClicked] = useState(false);
@@ -27,25 +25,27 @@ const CompanyAddress: FC<CompanyDataProps> = ({}) => {
     hasError,
     errors,
     formData,
-  } = useForm({ ...companyAddress }, { ...address });
+  } = useForm({ ...representativeAddress }, { ...address });
 
   useEffect(() => {
-    if (isCompanyAddressDataRight && buttonHasClicked) {
+    console.log(isRepresentativeAddressRight);
+
+    if (isRepresentativeAddressRight && buttonHasClicked) {
       setButtonHasClicked(false);
-      setFormError('isCompanyAddressDataRight', false);
-      setFormCompanyAddress({ ...formData });
+      setFormError('isRepresentativeAddressRight', false);
+      setFormRepresentativeAddress({ ...formData });
       reset();
       nextFormStep();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCompanyAddressDataRight, buttonHasClicked]);
+  }, [isRepresentativeAddressRight, buttonHasClicked]);
 
   const validateFields = () => {
     const fields = Object.keys(formData) as (keyof typeof formData)[];
     fields.forEach((field) => {
       if (field !== 'innerNumber' && isEmpty(formData[field])) {
         setError(field, 'Este campo es necesario');
-        setFormError('isCompanyAddressDataRight', false);
+        setFormError('isRepresentativeAddressRight', false);
       }
     });
   };
@@ -156,4 +156,4 @@ const CompanyAddress: FC<CompanyDataProps> = ({}) => {
   );
 };
 
-export default CompanyAddress;
+export default RepresentativeAddress;

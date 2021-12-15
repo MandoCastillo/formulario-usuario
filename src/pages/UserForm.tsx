@@ -8,6 +8,8 @@ import FormStepper from '../components/form/FormStepper';
 import { FormContext } from '../context/FormContext';
 import CompanyAddress from '../components/form/CompanyAddress';
 import RepresentativeData from '../components/form/RepresentativeData';
+import RepresentativeAddress from '../components/form/RepresentativeAddress';
+import BankAccount from '../components/form/BankAccount';
 
 const UserForm: FC = () => {
   const {
@@ -16,7 +18,7 @@ const UserForm: FC = () => {
   return (
     <Container
       sx={{
-        marginTop: 2,
+        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -25,7 +27,10 @@ const UserForm: FC = () => {
       <img
         src="https://kredfeed-assets.s3.amazonaws.com/images/logo-black.png"
         alt="logo"
-        width={300}
+        width={225}
+        style={{
+          marginBottom: '2rem',
+        }}
       />
       <Header title="Perfil de usuario" />
       <FormStepper />
@@ -38,6 +43,12 @@ const UserForm: FC = () => {
         </TabPanel>
         <TabPanel value="2">
           <RepresentativeData />
+        </TabPanel>
+        <TabPanel value="3">
+          <RepresentativeAddress />
+        </TabPanel>
+        <TabPanel value="4">
+          <BankAccount />
         </TabPanel>
       </TabContext>
     </Container>

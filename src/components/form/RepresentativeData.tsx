@@ -2,9 +2,13 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   SelectChangeEvent,
   Stack,
@@ -37,9 +41,14 @@ const RepresentativeData: FC = () => {
     formData,
     isValidEmail,
     isValidPhone,
-  } = useForm({ ...representativeData }, representativeResetData);
+  } = useForm(
+    { ...representativeData, identificationDocument: '' },
+    representativeResetData,
+  );
 
   useEffect(() => {
+    console.log(isRepresentativeDataRight);
+
     if (isRepresentativeDataRight && buttonHasClicked) {
       setButtonHasClicked(false);
       setFormError('isRepresentativeDataRight', false);
@@ -48,7 +57,7 @@ const RepresentativeData: FC = () => {
       nextFormStep();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRepresentativeDataRight]);
+  }, [isRepresentativeDataRight, buttonHasClicked]);
 
   const validateFields = () => {
     const fields = Object.keys(formData) as (keyof typeof formData)[];
@@ -121,31 +130,28 @@ const RepresentativeData: FC = () => {
             hasError={hasError}
           />
           <Grid item xs={12} md={6}>
-            <FormControl sx={{ minWidth: '100%', mt: 2 }}>
-              <InputLabel id="demo-simple-select-label">Género</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={formData.genre}
-                label="Género"
-                name="genre"
-                fullWidth
-                onChange={handleChange}
-                defaultValue={formData.genre}
-              >
-                <MenuItem value="male">Hombre</MenuItem>
-                <MenuItem value="female">Mujer</MenuItem>
-              </Select>
-            </FormControl>
+            <FormLabel component="legend" style={{ marginTop: '0.7rem' }}>
+              Género
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-label="gender"
+              name="genre"
+              value={formData.genre}
+              onChange={handleChange}
+            >
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Mujer"
+              />
+              <FormControlLabel
+                value="male"
+                control={<Radio />}
+                label="Hombre"
+              />
+            </RadioGroup>
           </Grid>
-          {/* <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Género"
-            name="genre"
-            onChange={onChange}
-            hasError={hasError}
-          /> */}
           <TextFieldCustom
             formData={formData}
             errors={errors}
@@ -199,16 +205,28 @@ const RepresentativeData: FC = () => {
             onChange={onChange}
             hasError={hasError}
           />
-
-          {/* <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Estado civil"
-            // type="tel"
-            name="maritalStatus"
-            onChange={onChange}
-            hasError={hasError}
-          /> */}
+          <Grid item xs={12} md={6}>
+            <FormControl sx={{ minWidth: '100%', mt: 2 }}>
+              <InputLabel id="demo-simple-select-label">
+                Estado civil
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formData.maritalStatus}
+                label="Estado civil"
+                name="maritalStatus"
+                fullWidth
+                onChange={handleChange}
+                defaultValue={formData.maritalStatus}
+              >
+                <MenuItem value="single">Soltero</MenuItem>
+                <MenuItem value="married">Casado</MenuItem>
+                <MenuItem value="divorced">Divorciado</MenuItem>
+                <MenuItem value="freeUnion">Unión libre</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
           <TextFieldCustom
             formData={formData}
             errors={errors}
