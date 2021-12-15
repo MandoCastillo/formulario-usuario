@@ -94,9 +94,7 @@ const BankAccount: FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">JSON con los datos</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {JSON.stringify(
@@ -144,7 +142,7 @@ const BankAccount: FC = () => {
       )}
       <Box
         sx={{
-          width: '100%',
+          width: 'calc(100vw - 96px)',
         }}
       >
         <Box
@@ -173,7 +171,7 @@ const BankAccount: FC = () => {
             />
           </Grid>
         </Box>
-        <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" justifyContent="space-between" flexGrow={1}>
           <Button onClick={prevFormStep} color="primary" size="large">
             Anterior
           </Button>
