@@ -1,4 +1,4 @@
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import { FC, useContext } from 'react';
@@ -6,11 +6,11 @@ import CompanyData from '../components/form/CompanyData';
 import Header from '../components/common/Header';
 import FormStepper from '../components/form/FormStepper';
 import { FormContext } from '../context/FormContext';
-import Address from '../components/form/Address';
+import CompanyAddress from '../components/form/CompanyAddress';
+import RepresentativeData from '../components/form/RepresentativeData';
 
 const UserForm: FC = () => {
   const {
-    setIsFormLoading,
     formState: { currentStep },
   } = useContext(FormContext);
   return (
@@ -34,11 +34,12 @@ const UserForm: FC = () => {
           <CompanyData />
         </TabPanel>
         <TabPanel value="1">
-          <Address />
+          <CompanyAddress />
         </TabPanel>
-        <TabPanel value="2">Item Three</TabPanel>
+        <TabPanel value="2">
+          <RepresentativeData />
+        </TabPanel>
       </TabContext>
-      {/* <Button onClick={() => setIsFormLoading(true)}>Guardar</Button> */}
     </Container>
   );
 };

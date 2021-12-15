@@ -18,7 +18,7 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
       return {
         ...state,
         isCompanyDataRight: true,
-        isAddressDataRight: true,
+        isCompanyAddressDataRight: true,
         isRepresentativeDataRight: true,
         isBankAccountRight: true,
       };
@@ -40,6 +40,18 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
       return {
         ...state,
         companyData: action.payload.value,
+      };
+
+    case 'setCompanyAddress':
+      return {
+        ...state,
+        companyAddress: action.payload.value,
+      };
+
+    case 'setRepresentativeData':
+      return {
+        ...state,
+        representativeData: action.payload.value,
       };
 
     default:

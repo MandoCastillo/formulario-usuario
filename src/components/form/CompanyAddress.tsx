@@ -1,40 +1,66 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../context/FormContext';
+import { address } from '../../context/formDataMock';
 import { useForm } from '../../hooks/useForm';
 import TextFieldCustom from '../common/TextFieldCustom';
 
 interface CompanyDataProps {}
 
-const Address: FC<CompanyDataProps> = ({}) => {
+const CompanyAddress: FC<CompanyDataProps> = ({}) => {
+  const {
+    setError: setFormError,
+    setFormCompanyAddress,
+    prevFormStep,
+    nextFormStep,
+    reset,
+    formState: { companyAddress, isCompanyAddressDataRight },
+  } = useContext(FormContext);
+
+  const [buttonHasClicked, setButtonHasClicked] = useState(false);
+
   const {
     onChange,
     isEmpty,
     setError,
     resetErrors,
-    isValidEmail,
-    isValidPhone,
     hasError,
     errors,
     formData,
-  } = useForm({
-    companyName: '',
-    tradeName: '',
-    nationality: '',
-    dateIncorporation: '',
-    RFC: '',
-    taxRegime: '',
-    industry: '',
-    proofAddress: '',
-    phoneNumber: '',
-    email: '',
-  });
-  const { prevFormStep, nextFormStep } = useContext(FormContext);
+  } = useForm({ ...companyAddress }, { ...address });
+
+  useEffect(() => {
+    console.log(isCompanyAddressDataRight);
+
+    if (isCompanyAddressDataRight && buttonHasClicked) {
+      setButtonHasClicked(false);
+      setFormError('isCompanyAddressDataRight', false);
+      setFormCompanyAddress({ ...formData });
+      reset();
+      // debugger;
+      nextFormStep();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCompanyAddressDataRight, buttonHasClicked]);
+
+  const validateFields = () => {
+    const fields = Object.keys(formData) as (keyof typeof formData)[];
+    fields.forEach((field) => {
+      if (field !== 'innerNumber' && isEmpty(formData[field])) {
+        setError(field, 'Este campo es necesario');
+        setFormError('isCompanyAddressDataRight', false);
+      }
+    });
+  };
 
   const validateData = () => {
-    resetErrors();
-    // reset();
+    setButtonHasClicked(true);
+    resetErrors(address);
+    reset();
+    validateFields();
+    // debugger;
   };
+
   return (
     <Box
       sx={{
@@ -52,69 +78,24 @@ const Address: FC<CompanyDataProps> = ({}) => {
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            name="companyName"
-            label="Razón social"
+            name="street"
+            label="Calle o Avenida"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Nombre comercial"
-            name="tradeName"
+            label="Número exterior"
+            name="outsideNumber"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Nacionalidad"
-            name="nationality"
-            onChange={onChange}
-            hasError={hasError}
-          />
-
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Fecha de constitución"
-            name="dateIncorporation"
-            type="date"
-            isShrink
-            onChange={onChange}
-            hasError={hasError}
-          />
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="RFC"
-            name="RFC"
-            onChange={onChange}
-            hasError={hasError}
-          />
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Régimen Fiscal"
-            name="taxRegime"
-            onChange={onChange}
-            hasError={hasError}
-          />
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Industria"
-            name="industry"
-            onChange={onChange}
-            hasError={hasError}
-          />
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            type="file"
-            label="Comprobante de domicilio"
-            name="proofAddress"
-            isShrink
+            label="Número interior"
+            name="innerNumber"
             onChange={onChange}
             hasError={hasError}
           />
@@ -122,18 +103,40 @@ const Address: FC<CompanyDataProps> = ({}) => {
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Número telefónico"
-            type="tel"
-            name="phoneNumber"
+            label="Código Postal "
+            name="zipCode"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Dirección de correo electrónico"
-            name="email"
-            type="email"
+            label="Colonia o Urbanización"
+            name="neighborhood"
+            onChange={onChange}
+            hasError={hasError}
+          />
+          <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Ciudad o Población"
+            name="city"
+            onChange={onChange}
+            hasError={hasError}
+          />
+          <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Entidad Federativa o Estado"
+            name="state"
+            onChange={onChange}
+            hasError={hasError}
+          />
+          <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="País"
+            name="country"
             onChange={onChange}
             hasError={hasError}
           />
@@ -157,4 +160,4 @@ const Address: FC<CompanyDataProps> = ({}) => {
   );
 };
 
-export default Address;
+export default CompanyAddress;

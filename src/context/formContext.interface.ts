@@ -1,11 +1,14 @@
 export interface FormState {
   isCompanyDataRight: boolean;
-  isAddressDataRight: boolean;
+  isCompanyAddressDataRight: boolean;
   isRepresentativeDataRight: boolean;
+  isRepresentativeAddressRight: boolean;
   isBankAccountRight: boolean;
   isLoading: boolean;
   currentStep: number;
   companyData: CompanyData;
+  companyAddress: Address;
+  representativeData: RepresentativeData;
 }
 
 export interface CompanyData {
@@ -21,10 +24,37 @@ export interface CompanyData {
   email: string;
 }
 
+export interface RepresentativeData {
+  name: string;
+  genre: 'male' | 'female';
+  dateBirth: string;
+  stateBirth: string;
+  countryBirth: string;
+  nationality: string;
+  CURP: string;
+  RFC: string;
+  maritalStatus: 'single' | 'married';
+  email: string;
+  phoneNumber: string;
+  identificationDocument: string;
+}
+
+export interface Address {
+  street: string;
+  outsideNumber: string;
+  innerNumber?: string;
+  zipCode: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  country: string;
+}
+
 export type ErrorFormType =
   | 'isCompanyDataRight'
-  | 'isAddressDataRight'
+  | 'isCompanyAddressDataRight'
   | 'isRepresentativeDataRight'
+  | 'isRepresentativeAddressRight'
   | 'isBankAccountRight';
 
 export type FormAction =
@@ -42,6 +72,7 @@ export type FormAction =
       };
     }
   | { type: 'resetErrors' }
+  | { type: 'prevStep' }
   | { type: 'nextStep' }
   | {
       type: 'setCompanyData';
@@ -49,4 +80,15 @@ export type FormAction =
         value: CompanyData;
       };
     }
-  | { type: 'prevStep' };
+  | {
+      type: 'setRepresentativeData';
+      payload: {
+        value: RepresentativeData;
+      };
+    }
+  | {
+      type: 'setCompanyAddress';
+      payload: {
+        value: Address;
+      };
+    };

@@ -1,4 +1,8 @@
-import { CompanyData } from './formContext.interface';
+import {
+  Address,
+  CompanyData,
+  RepresentativeData,
+} from './formContext.interface';
 
 export const companyData: CompanyData = {
   companyName: '',
@@ -11,4 +15,30 @@ export const companyData: CompanyData = {
   proofAddress: '',
   phoneNumber: '',
   email: '',
+};
+
+export const address: Address = {
+  city: '',
+  country: '',
+  neighborhood: '',
+  outsideNumber: '',
+  state: '',
+  street: '',
+  zipCode: '',
+  innerNumber: '',
+};
+
+export const representativeData: RepresentativeData = {
+  CURP: '',
+  RFC: '',
+  countryBirth: '',
+  dateBirth: '',
+  email: '',
+  genre: 'female',
+  identificationDocument: '',
+  maritalStatus: 'single',
+  name: '',
+  nationality: '',
+  phoneNumber: '',
+  stateBirth: '',
 };

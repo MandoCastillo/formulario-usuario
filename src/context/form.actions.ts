@@ -1,7 +1,9 @@
 import {
+  Address,
   CompanyData,
   ErrorFormType,
   FormAction,
+  RepresentativeData,
 } from './formContext.interface';
 
 export const setFormError = (
@@ -36,6 +38,22 @@ export const prevStep = (): FormAction => ({
 
 export const setCompanyData = (value: CompanyData): FormAction => ({
   type: 'setCompanyData',
+  payload: {
+    value,
+  },
+});
+
+export const setCompanyAddress = (value: Address): FormAction => ({
+  type: 'setCompanyAddress',
+  payload: {
+    value,
+  },
+});
+
+export const setRepresentativeData = (
+  value: RepresentativeData,
+): FormAction => ({
+  type: 'setRepresentativeData',
   payload: {
     value,
   },

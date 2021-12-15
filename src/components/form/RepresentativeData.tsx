@@ -1,17 +1,28 @@
-import { Box, Button, Grid, Stack } from '@mui/material';
-import { FC, useContext, useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+} from '@mui/material';
+import { FC, useContext, useEffect, useState, ChangeEvent } from 'react';
 import { FormContext } from '../../context/FormContext';
 import { useForm } from '../../hooks/useForm';
 import TextFieldCustom from '../common/TextFieldCustom';
-import { companyData as companyResetData } from '../../context/formDataMock';
+import { representativeData as representativeResetData } from '../../context/formDataMock';
 
-const CompanyData: FC = () => {
+const RepresentativeData: FC = () => {
   const {
     setError: setFormError,
-    reset,
+    setFormRepresentativeData,
+    prevFormStep,
     nextFormStep,
-    setFormCompanyData,
-    formState: { isCompanyDataRight, companyData },
+    reset,
+    formState: { isRepresentativeDataRight, representativeData },
   } = useContext(FormContext);
 
   const [buttonHasClicked, setButtonHasClicked] = useState(false);
@@ -21,23 +32,23 @@ const CompanyData: FC = () => {
     isEmpty,
     setError,
     resetErrors,
-    isValidEmail,
-    isValidPhone,
     hasError,
     errors,
     formData,
-  } = useForm({ ...companyData, proofAddress: '' }, companyResetData);
+    isValidEmail,
+    isValidPhone,
+  } = useForm({ ...representativeData }, representativeResetData);
 
   useEffect(() => {
-    if (isCompanyDataRight && buttonHasClicked) {
+    if (isRepresentativeDataRight && buttonHasClicked) {
       setButtonHasClicked(false);
-      setFormError('isCompanyDataRight', false);
-      setFormCompanyData({ ...formData });
+      setFormError('isRepresentativeDataRight', false);
+      setFormRepresentativeData({ ...formData });
       reset();
       nextFormStep();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCompanyDataRight, buttonHasClicked]);
+  }, [isRepresentativeDataRight]);
 
   const validateFields = () => {
     const fields = Object.keys(formData) as (keyof typeof formData)[];
@@ -52,7 +63,7 @@ const CompanyData: FC = () => {
               'phoneNumber',
               'Este campo es necesario o no cumple los requisitos',
             );
-            setFormError('isCompanyDataRight', false);
+            setFormError('isRepresentativeDataRight', false);
           }
           break;
         case 'email':
@@ -61,14 +72,14 @@ const CompanyData: FC = () => {
               'email',
               'Este campo es necesario o no cumple los requisitos',
             );
-            setFormError('isCompanyDataRight', false);
+            setFormError('isRepresentativeDataRight', false);
           }
           break;
 
         default:
           if (isEmpty(formData[field])) {
             setError(field, 'Este campo es necesario');
-            setFormError('isCompanyDataRight', false);
+            setFormError('isRepresentativeDataRight', false);
           }
           break;
       }
@@ -77,9 +88,14 @@ const CompanyData: FC = () => {
 
   const validateData = () => {
     setButtonHasClicked(true);
-    resetErrors(companyResetData);
+    resetErrors(representativeResetData);
     reset();
     validateFields();
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    // setAge(event.target.value as string);
+    onChange(event as ChangeEvent<HTMLInputElement>);
   };
 
   return (
@@ -99,16 +115,61 @@ const CompanyData: FC = () => {
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            name="companyName"
-            label="Razón social"
+            name="name"
+            label="Nombre"
+            onChange={onChange}
+            hasError={hasError}
+          />
+          <Grid item xs={12} md={6}>
+            <FormControl sx={{ minWidth: '100%', mt: 2 }}>
+              <InputLabel id="demo-simple-select-label">Género</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formData.genre}
+                label="Género"
+                name="genre"
+                fullWidth
+                onChange={handleChange}
+                defaultValue={formData.genre}
+              >
+                <MenuItem value="male">Hombre</MenuItem>
+                <MenuItem value="female">Mujer</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          {/* <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Género"
+            name="genre"
+            onChange={onChange}
+            hasError={hasError}
+          /> */}
+          <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Fecha de nacimiento"
+            name="dateBirth"
+            type="date"
+            isShrink
+            onChange={onChange}
+            hasError={hasError}
+          />
+
+          <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Entidad Federativa de nacimiento"
+            name="stateBirth"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Nombre comercial"
-            name="tradeName"
+            label="País de nacimiento"
+            name="countryBirth"
             onChange={onChange}
             hasError={hasError}
           />
@@ -120,38 +181,49 @@ const CompanyData: FC = () => {
             onChange={onChange}
             hasError={hasError}
           />
-
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Fecha de constitución"
-            name="dateIncorporation"
-            type="date"
-            isShrink
+            label="CURP"
+            name="CURP"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
+            // type="file"
+            // isShrink
             label="RFC"
             name="RFC"
             onChange={onChange}
             hasError={hasError}
           />
+
+          {/* <TextFieldCustom
+            formData={formData}
+            errors={errors}
+            label="Estado civil"
+            // type="tel"
+            name="maritalStatus"
+            onChange={onChange}
+            hasError={hasError}
+          /> */}
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Régimen Fiscal"
-            name="taxRegime"
+            label="Correo electrónico"
+            name="email"
+            type="email"
             onChange={onChange}
             hasError={hasError}
           />
           <TextFieldCustom
             formData={formData}
             errors={errors}
-            label="Industria"
-            name="industry"
+            label="Teléfono"
+            name="phoneNumber"
+            type="tel"
             onChange={onChange}
             hasError={hasError}
           />
@@ -159,34 +231,18 @@ const CompanyData: FC = () => {
             formData={formData}
             errors={errors}
             type="file"
-            label="Comprobante de domicilio"
-            name="proofAddress"
             isShrink
-            onChange={onChange}
-            hasError={hasError}
-          />
-
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Número telefónico"
-            type="tel"
-            name="phoneNumber"
-            onChange={onChange}
-            hasError={hasError}
-          />
-          <TextFieldCustom
-            formData={formData}
-            errors={errors}
-            label="Dirección de correo electrónico"
-            name="email"
-            type="email"
+            label="Documento de identificación"
+            name="identificationDocument"
             onChange={onChange}
             hasError={hasError}
           />
         </Grid>
       </Box>
-      <Stack direction="row" justifyContent="flex-end">
+      <Stack direction="row" justifyContent="space-between">
+        <Button onClick={prevFormStep} color="primary" size="large">
+          Anterior
+        </Button>
         <Button
           onClick={validateData}
           style={{ color: 'white' }}
@@ -201,4 +257,4 @@ const CompanyData: FC = () => {
   );
 };
 
-export default CompanyData;
+export default RepresentativeData;

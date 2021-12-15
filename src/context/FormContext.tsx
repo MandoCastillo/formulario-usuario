@@ -6,19 +6,30 @@ import {
   setFormError,
   setIsLoading,
   setCompanyData,
+  setCompanyAddress,
+  setRepresentativeData,
 } from './form.actions';
 import formReducer from './form.reducer';
-import { ErrorFormType, FormState, CompanyData } from './formContext.interface';
-import { companyData } from './formDataMock';
+import {
+  ErrorFormType,
+  FormState,
+  CompanyData,
+  Address,
+  RepresentativeData,
+} from './formContext.interface';
+import { address, companyData, representativeData } from './formDataMock';
 
 export const formInitialState: FormState = {
   isCompanyDataRight: false,
-  isAddressDataRight: false,
+  isCompanyAddressDataRight: false,
   isRepresentativeDataRight: false,
+  isRepresentativeAddressRight: false,
   isBankAccountRight: false,
   isLoading: false,
   currentStep: 0,
   companyData,
+  companyAddress: address,
+  representativeData,
 };
 
 export interface FormContextProps {
@@ -30,6 +41,8 @@ export interface FormContextProps {
   nextFormStep: () => void;
   prevFormStep: () => void;
   setFormCompanyData: (value: CompanyData) => void;
+  setFormCompanyAddress: (value: Address) => void;
+  setFormRepresentativeData: (value: RepresentativeData) => void;
 }
 
 export const FormContext = createContext({} as FormContextProps);
@@ -65,6 +78,14 @@ export const FormProvider: FC = ({ children }) => {
     dispatch(setCompanyData(value));
   };
 
+  const setFormCompanyAddress = (value: Address) => {
+    dispatch(setCompanyAddress(value));
+  };
+
+  const setFormRepresentativeData = (value: RepresentativeData) => {
+    dispatch(setRepresentativeData(value));
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -76,6 +97,8 @@ export const FormProvider: FC = ({ children }) => {
         reset,
         setIsFormLoading,
         setFormCompanyData,
+        setFormCompanyAddress,
+        setFormRepresentativeData,
       }}
     >
       {children}
